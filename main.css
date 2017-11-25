@@ -1,0 +1,159 @@
+@import url('https://fonts.googleapis.com/css?family=Share+Tech+Mono');
+#outerShell{
+  position: relative;
+  height: 500px;
+  width: 500px;
+  background-color: black;
+  border-radius: 100%;
+  border: black solid 10px;
+  margin: 30px auto 0px auto;
+}
+.button{
+  display: inline-block;
+  height:242px;
+  width:242px;
+  margin: 2px;
+  border: solid 1px black; 
+}
+.button:active{
+  transform: translateY(1px);
+}
+#greenButton{
+  border-radius: 100% 0% 0% 0%;
+  background-color: hsl(120,100%,25%);
+}
+#redButton{
+  border-radius: 0% 100% 0% 0%;
+  background-color: hsl(360,100%,25%);
+
+}
+#blueButton{
+  border-radius: 0% 0% 100% 0%;
+  background-color: hsl(240,100%,25%);
+
+}
+#yellowButton{
+  border-radius: 0% 0% 0% 100%;
+  background-color: hsl(60,100%,25%);
+
+}
+#simonFace{
+  position: absolute;
+  left: 28%;
+  top: 28%;
+  background-color: silver;
+  height: 40%;
+  width: 40%;
+  text-align: center;
+   border-radius: 100%; 
+  padding-top: 0px;
+  overflow: hidden;
+  border: black solid 10px;
+  
+  
+}
+#middleFace{
+  display: block;
+  height: 20%;
+}
+#switchContainerBox{
+  margin-top: 10%;
+}
+.containerBox{
+  height: 100%;
+  width: 33%;
+  float: left;
+  position: relative;
+}
+label{
+  display: block;
+}
+input{
+  display: block;
+}
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 50px;
+  height: 28px;
+  verical-align: center;
+  top: 45%;
+  margin-top: 5px;
+}
+.switchLabel{
+  display: inline;
+  vertical-align: top;
+  line-height: 40px; 
+}
+.switch input {display:none;}
+
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 20px;
+  width: 20px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+input:checked + .slider {
+  background-color: #2196F3;
+}
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+input:checked + .slider:before {
+  -webkit-transform: translateX(21px);
+  -ms-transform: translateX(21px);
+  transform: translateX(21px);
+}
+#counter{
+  color: red;
+  background-color: black;
+  height: 100%;
+  width: 60%;
+  font-size: 30px;
+  vertical-align: middle;
+  line-height: 40px;
+  font-family: 'Share Tech Mono', monospace;
+  display: inline-block;
+}
+.faceBtn{
+  height: 20px;
+  width: 20px;
+  border-radius: 100%;
+  border: black 2px solid; 
+  margin: 0px auto 0px auto;
+  align-vertical: bottom;
+  display: inline-block;
+}
+#start{
+  background-color: green;
+}
+#strict{
+  background-color: yellow;
+}
+#ledLight{
+  height: 5px;
+  width: 5px;
+  background-color: black;
+  display: inline-block;
+  border-radius: 100%;
+  border: black solid 1px;
+  top: 25px;
+  left: 75%;
+  position: absolute; 
+}

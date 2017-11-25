@@ -1,0 +1,42 @@
+<head>
+  <title>Simon Say's</title>
+  <meta charset="UTF-8">
+  <link rel="stylesheet" href="main.css" />
+</head>
+
+
+
+<div id="outerShell">
+  <div class="button" id="greenButton" data-number="0"></div>
+  <div class="button" id="redButton" data-number="1"></div>
+  <div class="button" id="yellowButton" data-number="3"></div>
+  <div class="button" id="blueButton" data-number="2"></div>
+  <div id="simonFace">
+    <h2>Simon</h2>
+    <div id="middleFace">
+      <div class="containerBox">
+        <div id="counter"></div>
+      </div>
+      <div class="containerBox">
+        <label for="start">Start</label>
+        <div class="faceBtn" id="start"></div>
+      </div>
+      <div class="containerBox">
+        <label for="strict">Strict</label>
+        <div class="faceBtn" id="strict"></div>
+        <div id="ledLight"></div>
+      </div>
+    </div>
+    <div id="switchContainerBox">
+      <label for="switch" class="switchLabel">Off</label>
+      <label class="switch">
+        <input type="checkbox" value="onSwitch" id="switch"/>
+        <span class="slider"></span>
+      </label>
+      <label for="switch" class="switchLabel">On</label>
+    </div>
+  </div>
+</div>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="actions.js"></script>
