@@ -11,10 +11,17 @@ let gameState = {
   counter: 0
 }
 
+let gameSounds = {
+  greenButton: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'),
+  redButton: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'),
+  blueButton: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'),
+  yellowButton: new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3'),
+  introMusic: new Audio('https://drive.google.com/uc?export=download&id=0Bw2029NKQAh_NUVnRFRZamswYlU'),
+  exitMusic: new Audio('https://drive.google.com/uc?export=download&id=0Bw2029NKQAh_bUN3LWY4NkVld3c'),
+  incorrectGuess: new Audio('https://drive.google.com/uc?export=download&id=0Bw2029NKQAh_TEFFUU9OUEZLWG8'),
+  click: new Audio('https://drive.google.com/uc?export=download&id=0Bw2029NKQAh_ZklPQ29NYThsVW8')
+}
 
-let gameSounds = [new Audio('https://drive.google.com/uc?export=download&id=0Bw2029NKQAh_ZklPQ29NYThsVW8'), new Audio('https://drive.google.com/uc?export=download&id=0Bw2029NKQAh_TEFFUU9OUEZLWG8'), new Audio('https://drive.google.com/uc?export=download&id=0Bw2029NKQAh_NUVnRFRZamswYlU'), new Audio('https://drive.google.com/uc?export=download&id=0Bw2029NKQAh_bUN3LWY4NkVld3c')]
-
-let btnSounds = [new Audio('https://s3.amazonaws.com/freecodecamp/simonSound1.mp3'), new Audio('https://s3.amazonaws.com/freecodecamp/simonSound2.mp3'), new Audio('https://s3.amazonaws.com/freecodecamp/simonSound3.mp3'), new Audio('https://s3.amazonaws.com/freecodecamp/simonSound4.mp3')]
 
 function lightAllButtons(){
   $('#greenButton').css('background-color', 'hsl(120,100%,45%)')
@@ -35,24 +42,26 @@ function changeSelectedButtonColor(element){
 
   if (id === 'greenButton'){
     element.css('background-color', 'hsl(120,100%,45%)')
-    btnSounds[0].play()
+    gameSounds.greenButton.play()
   } else if (id === 'redButton'){
     element.css('background-color', 'hsl(360,100%,45%)')
-    btnSounds[1].play()
+    gameSounds.redButton.play()
   } else if (id === 'blueButton'){
     element.css('background-color', 'hsl(240,100%,45%)')
-    btnSounds[2].play()
+    gameSounds.blueButton.play()
   } else if (id === 'yellowButton'){
     element.css('background-color', 'hsl(60,100%,45%)')
-    btnSounds[3].play()
+    gameSounds.yellowButton.play()
   }
 }
 
-function addToAiArr(aiArr){
+function addToAiArr(array){
 
   let random = Math.floor(Math.random() * 4)
-  aiArr.push(random)
-  
+  array = array.concat(random)
+
+  return array
+
 }
 
 function addToUserArr(userArr, btnNumber){
@@ -62,9 +71,10 @@ function addToUserArr(userArr, btnNumber){
 }
 
 function checkArrayMatch(userArr, aiArr){
+  
 
-  let length = userArr.length
-  let bool = false
+  let length = userArr.length,
+    bool = false
 
   if (userArr[length - 1] === aiArr[length - 1]){
     bool = true
@@ -82,15 +92,11 @@ function resetArrs(userArr, aiArr){
   userArr = []
 
   return [userArr, aiArr]
-
 }
 
 
 function updateCounter(correct){
 
-  // let counter = parseInt($('#counter').html())
-  // counter = +counter
-  
   if (correct){
     gameState.counter += 1
   } else if (!correct && gameState.strict){
@@ -98,28 +104,26 @@ function updateCounter(correct){
   }
 
   $('#counter').html(gameState.counter)
-
 }
 
 
 function fullSimonAnimation(aiArr){
 
   let number
-  let length = aiArr.length
+
   gameState.userTurn = false
-  setTimeout(function(){gameState.userTurn = true}, length * 1500)
-  
-  for (let i = 0; i < length; i++){
+  setTimeout(function(){gameState.userTurn = true}, aiArr.length * 1500)
 
-    number = aiArr[i];
-    (function(number){
-    setTimeout(function(){buttonAnimation(number)}, 1500 * i)
-    })(number)
-    
-    setTimeout(defaultButtonColors, 1500 * i + 1000)
 
-    
-  }
+  aiArr.forEach((btnNumber, idx) => {
+
+    (function(btnNumber){
+      setTimeout(function(){buttonAnimation(btnNumber)}, 1500 * idx)
+    })(btnNumber)
+
+      setTimeout(defaultButtonColors, 1500 * idx + 1000)
+
+  })
 
 }
 
@@ -127,53 +131,53 @@ function fullSimonAnimation(aiArr){
 function buttonAnimation(number){
 
   if (gameState.on){
-    if (number === '0'){
+    
+    if (number === 0){
       $('#greenButton').css('background-color', 'hsl(120,100%,45%)')
-      btnSounds[0].play()
-    } else if (number === '1'){
+      gameSounds.greenButton.play()
+    } else if (number === 1){
       $('#redButton').css('background-color', 'hsl(360,100%,45%)')
-      btnSounds[1].play()
+      gameSounds.redButton.play()
 
-    } else if (number === '2'){
+    } else if (number === 2){
       $('#blueButton').css('background-color', 'hsl(240,100%,45%)')
-      btnSounds[2].play()
+      gameSounds.blueButton.play()
 
-    } else if (number === '3'){
+    } else if (number === 3){
       $('#yellowButton').css('background-color', 'hsl(60,100%,45%)')
-      btnSounds[3].play()
+      gameSounds.yellowButton.play()
     }
   }
 }
 
 
-function matchedArray(userArr, aiArr){
+function correctPattern(){
 
     updateCounter(true)
-    addToAiArr(aiArr)
-    
+    aiArr = addToAiArr(aiArr)
+
     setTimeout(function(){
-      fullSimonAnimation(aiArr)    
+      fullSimonAnimation(aiArr)
     }, 1500)
-  
-  return []
+
 
 }
 
 function mismatchedArray(userArr, aiArr){
 
   let array = []
-  gameSounds[1].play()
+  gameSounds.incorrectGuess.play()
   updateCounter(false)
   array = resetArrs(userArr, aiArr)
-    
+
   if (gameState.strict){
-    addToAiArr(array[1])
+    aiArr = addToAiArr(array[1])
   }
 
   setTimeout(function(){
-      fullSimonAnimation(array[1])    
+      fullSimonAnimation(array[1])
   }, 1500)
-  
+
   return array
 }
 
@@ -184,7 +188,7 @@ $(document).ready(function(){
     if ($(this).is('input:checked')){
 
       gameState.on = true
-      gameSounds[0].play()
+      gameSounds.click.play()
       lightAllButtons()
 
     } else {
@@ -192,7 +196,7 @@ $(document).ready(function(){
       gameState.on = false
       gameState.started = false
       gameState.userTurn = false
-      gameSounds[3].play()
+      gameSounds.exitMusic.play()
       $('#counter').text('')
       $('#ledLight').css('background-color', 'black')
       aiArr = []
@@ -209,10 +213,10 @@ $(document).ready(function(){
 
       gameState.started = true
       $('#counter').text('0')
-      gameSounds[2].play()
+      gameSounds.introMusic.play()
       defaultButtonColors()
       setTimeout(function(){
-        addToAiArr(aiArr)
+        aiArr = addToAiArr(aiArr)
         fullSimonAnimation(aiArr)
         gameState.userTurn = true}, 3000)
     }
@@ -254,13 +258,13 @@ $(document).ready(function(){
       gameState.userTurn = false
       defaultButtonColors()
       
-      addToUserArr(userArr, $(this).attr('data-number'))
+      addToUserArr(userArr, +$(this).attr('data-number'))
       let bool = checkArrayMatch(userArr, aiArr)
 
       if (bool && aiArr.length === userArr.length){
-
-        updatedArrays = matchedArray(userArr, aiArr)
-        userArr = updatedArrays
+        
+        correctPattern(aiArr)
+        userArr = []
 
       } else if (!bool){
 
